@@ -5,6 +5,7 @@ import java.io.IOException;
 public class GroupAssigner
 	{
 		static Scanner userInput = new Scanner(System.in);
+		static int amount;
 		static String[] groupHistory;
 		static String[] groups;
 		
@@ -16,16 +17,23 @@ public class GroupAssigner
 				
 			}
 
-		private static void amountPerGroup()
+		private static void amountPerGroup() throws IOException
 			{
+				Scanner studentNames = new Scanner(new File("StudentList.txt"));
 				System.out.println("Welcome to the Group Creator 2020"
 						+ "\nHow many people do you want per group?");
+				amount = userInput.nextInt();
+				
+				
 				
 			}
 
-		private static void assigningGroup()
+		private static void assigningGroup() throws IOException
 			{
-				// TODO Auto-generated method stub
+				
+				
+				
+				
 				
 			}
 

@@ -8,14 +8,14 @@ public class GroupAssigner
 		static Scanner userInput = new Scanner(System.in);
 		static int amount;
 		static String[] groupHistory;
-		static String[] groups = new String[amount];
+		static String[] groups;
 		static ArrayList<String> students = new ArrayList<String>();
 		
 		public static void main(String[] args) throws IOException
 			{
 				amountPerGroup();
 				assigningGroup();
-				avoidPairingTwoSameStudents();
+				//avoidPairingTwoSameStudents();
 				
 			}
 
@@ -29,7 +29,7 @@ public class GroupAssigner
 					{
 						String temp = studentNames.nextLine();
 						String[] temps = temp.split(" ");
-						students.add(temps[0] + " " + temps[1]);
+						students.add(temps[0] + " " + temps[1] + " ");
 						
 						
 					}
@@ -39,28 +39,37 @@ public class GroupAssigner
 
 		private static void assigningGroup()
 			{
-				int random = (int) (Math.random()*students.size() - 1);
+				int random = 0;
 				int[] history = new int[students.size()];
+				groups = new String[amount];
+				int perGroup = students.size() / amount;
 				
-				for(int i = 0; i < groups.length; i++)
+				for(int i = 0; i < amount; i++)
 					{
-						history[i] = random;
-//						if(i == 0)
-//							{
-//								groups[i] = students.get(random);
-//							}
-//						else if(i > 0 && history[i - 1] != random)
-//							{
-								groups[i] = students.get(random);
-//							}
-//						else
-//							{
-//								i--;
-//							}
-						
+						for(int j = 0; j <= perGroup; j++)
+							{
+								random = (int)(Math.random()*students.size());
+								if(j == 0)
+									{
+										history[0] = random;
+										groups[0] = students.get(random);	
+									}
+								else if(j > 0 && random != history[j - 1])
+									{
+										groups[i] += students.get(random);
+										history[j] = random;
+									}
+								else if(random == history[j-1])
+									{
+										j--;
+									}
+							}
+						System.out.println(groups[i]);
 					}
-				
-				
+				System.out.println(perGroup);
+				System.out.println(random);
+				System.out.println(history[0]);
+				System.out.println(groups[0]);
 			}
 
 		private static void avoidPairingTwoSameStudents()

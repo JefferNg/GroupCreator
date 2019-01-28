@@ -49,6 +49,7 @@ public class GroupAssigner
 						for(int j = 0; j <= perGroup; j++)
 							{
 								random = (int)(Math.random()*students.size());
+								
 								if(j == 0)
 									{
 										history[0] = random;

@@ -7,15 +7,17 @@ public class GroupAssigner
 	{
 		static Scanner userInput = new Scanner(System.in);
 		static int amount;
-		static String[] groupHistory;
-		static String[] groups;
+		static String[] firstGroups;
+		static String[] secondGroups;
 		static ArrayList<String> students = new ArrayList<String>();
+		static ArrayList<String> forFirstProject = new ArrayList<String>();
+		static ArrayList<String> forSecondProject = new ArrayList<String>();
 		
 		public static void main(String[] args) throws IOException
 			{
 				amountPerGroup();
 				assigningGroup();
-				//avoidPairingTwoSameStudents();
+				avoidPairingTwoSameStudents();
 				
 			}
 
@@ -30,6 +32,8 @@ public class GroupAssigner
 						String temp = studentNames.nextLine();
 						String[] temps = temp.split(" ");
 						students.add(temps[0] + " " + temps[1] + " ");
+						forFirstProject.add(temps[0] + " " + temps[1] + " ");
+						forSecondProject.add(temps[0] + " " + temps[1] + " ");
 						
 						
 					}
@@ -41,41 +45,109 @@ public class GroupAssigner
 			{
 				int random = 0;
 				int[] history = new int[students.size()];
-				groups = new String[amount];
+				firstGroups = new String[amount];
 				int perGroup = students.size() / amount;
+				int extras = students.size() % amount;
 				
 				for(int i = 0; i < amount; i++)
 					{
-						for(int j = 0; j <= perGroup; j++)
+						for(int j = 0; j < perGroup; j++)
 							{
-								random = (int)(Math.random()*students.size());
+								random = (int)(Math.random()*forFirstProject.size());
 								
 								if(j == 0)
 									{
 										history[0] = random;
-										groups[0] = students.get(random);	
+										firstGroups[i] = forFirstProject.get(random);	
+										forFirstProject.remove(random);
 									}
-								else if(j > 0 && random != history[j - 1])
+								else if(random != history[j - 1] || !firstGroups[i].contains(forFirstProject.get(random)))
 									{
-										groups[i] += students.get(random);
+										firstGroups[i] += forFirstProject.get(random);
 										history[j] = random;
+										forFirstProject.remove(random);
 									}
-								else if(random == history[j-1])
+								else if(random == history[j-1] || firstGroups[i].contains(forFirstProject.get(random)))
 									{
 										j--;
 									}
+								
+								
 							}
-						System.out.println(groups[i]);
+												
+						
 					}
+				
+				for(int i = 0; i < extras; i++)
+					{	
+						int randomGroup = (int)(Math.random()*amount);
+						firstGroups[randomGroup] += forFirstProject.get(0);
+						forFirstProject.remove(0);
+							
+					}
+				System.out.println("For project 1:");
+				
+				for(int i = 1; i <= amount; i++)
+					{
+						System.out.println("Group " + i + ": " + firstGroups[i - 1]);
+					}
+				
 				System.out.println(perGroup);
 				System.out.println(random);
 				System.out.println(history[0]);
-				System.out.println(groups[0]);
+				System.out.println(extras);
 			}
 
 		private static void avoidPairingTwoSameStudents()
 			{
-				// TODO Auto-generated method stub
+				int random = 0;
+				int[] history = new int[students.size()];
+				secondGroups = new String[amount];
+				int perGroup = students.size() / amount;
+				int extras = students.size() % amount;
+				
+				for(int i = 0; i < amount; i++)
+					{
+						for(int j = 0; j < perGroup; j++)
+							{
+								random = (int)(Math.random()*forSecondProject.size());
+								
+								if(j == 0)
+									{
+										history[0] = random;
+										secondGroups[i] = forSecondProject.get(random);	
+										forSecondProject.remove(random);
+									}
+								else if(random != history[j - 1] || !secondGroups[i].contains(forSecondProject.get(random)) || !secondGroups[i].contains(firstGroups[i]))
+									{
+										secondGroups[i] += forSecondProject.get(random);
+										history[j] = random;
+										forSecondProject.remove(random);
+									}
+								else if(random == history[j-1] || secondGroups[i].contains(forSecondProject.get(random)) || secondGroups[i].contains(firstGroups[1]))
+									{
+										j--;
+									}
+								
+								
+							}
+												
+						
+					}
+				
+				for(int i = 0; i < extras; i++)
+					{	
+						int randomGroup = (int)(Math.random()*amount);
+						secondGroups[randomGroup] += forSecondProject.get(0);
+						forSecondProject.remove(0);
+							
+					}
+				System.out.println("For project 2:");
+				
+				for(int i = 1; i <= amount; i++)
+					{
+						System.out.println("Group " + i + ": " + secondGroups[i - 1]);
+					}
 				
 			}
 

@@ -79,12 +79,11 @@ public class GroupAssigner
 					}
 				
 				for(int i = 0; i < extras; i++)
-					{	
-						int randomGroup = (int)(Math.random()*amount);
-						firstGroups[randomGroup] += forFirstProject.get(0);
-						forFirstProject.remove(0);
-							
+					{		
+						firstGroups[i] += forFirstProject.get(0);
+						forFirstProject.remove(0);	
 					}
+				
 				System.out.println("For project 1:");
 				
 				for(int i = 1; i <= amount; i++)
@@ -93,9 +92,8 @@ public class GroupAssigner
 					}
 				
 				System.out.println(perGroup);
-				System.out.println(random);
-				System.out.println(history[0]);
 				System.out.println(extras);
+				System.out.println();
 			}
 
 		private static void avoidPairingTwoSameStudents()
@@ -118,30 +116,34 @@ public class GroupAssigner
 										secondGroups[i] = forSecondProject.get(random);	
 										forSecondProject.remove(random);
 									}
-								else if(random != history[j - 1] || !secondGroups[i].contains(forSecondProject.get(random)) || !secondGroups[i].contains(firstGroups[i]))
+								else if(random != history[j - 1] || !secondGroups[i].contains(forSecondProject.get(random)))
 									{
 										secondGroups[i] += forSecondProject.get(random);
 										history[j] = random;
 										forSecondProject.remove(random);
 									}
-								else if(random == history[j-1] || secondGroups[i].contains(forSecondProject.get(random)) || secondGroups[i].contains(firstGroups[1]))
+								else if(random == history[j-1] || secondGroups[i].contains(forSecondProject.get(random)))
 									{
 										j--;
 									}
 								
-								
 							}
-												
+						
+//						for(int k = 0; k < secondGroups[i].length(); k++)
+//							{
+//								String temp = secondGroups[k];
+//								
+//								
+//							}
 						
 					}
 				
 				for(int i = 0; i < extras; i++)
 					{	
-						int randomGroup = (int)(Math.random()*amount);
-						secondGroups[randomGroup] += forSecondProject.get(0);
+						secondGroups[i] += forSecondProject.get(0);
 						forSecondProject.remove(0);
-							
 					}
+				
 				System.out.println("For project 2:");
 				
 				for(int i = 1; i <= amount; i++)

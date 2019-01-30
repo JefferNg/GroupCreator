@@ -127,16 +127,14 @@ public class GroupAssigner
 										j--;
 									}
 								
+								
 							}
 						
-//						for(int k = 0; k < secondGroups[i].length(); k++)
-//							{
-//								String temp = secondGroups[k];
-//								
-//								
-//							}
 						
 					}
+				
+				
+				
 				
 				for(int i = 0; i < extras; i++)
 					{	
